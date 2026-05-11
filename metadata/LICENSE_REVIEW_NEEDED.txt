@@ -1,0 +1,9 @@
+License review needed before public upload.
+
+The extracted Python function appears to be author-created supplementary code
+for the paper, but the package should not be made public until David Levinson
+confirms the intended license. Recommended choices for a small code-only
+release would be MIT, BSD-3-Clause, or another explicit open-source license.
+
+Do not include publisher PDFs or proofs in the public package unless separate
+rights clearance exists.

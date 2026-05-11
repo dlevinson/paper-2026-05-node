@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite the associated paper."
+title: "Replication materials for Network Origin-Demand Estimation Using Percolation (NODE)"
+authors:
+  - family-names: "Levinson"
+date-released: "2026"
+doi: "10.32866/001c.147387"
+preferred-citation:
+  type: article
+  title: "Network Origin-Demand Estimation Using Percolation (NODE)"
+  authors:
+    - family-names: "Levinson"
+  journal: "Findings"
+  year: 2026
+  doi: "10.32866/001c.147387"
