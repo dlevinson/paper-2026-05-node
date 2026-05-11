@@ -1,7 +1,0 @@
-License pending.
-
-This repository is staged as a private draft package. Do not make it public
-until the license for the author-created code and source materials is confirmed.
-
-The package currently excludes publisher PDFs, article proofs, third-party raw
-data, and human-subject or restricted-access data.

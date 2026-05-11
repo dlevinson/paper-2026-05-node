@@ -1,12 +1,13 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
 """Minimal NODE implementation extracted from the paper SI.
 
 Source:
 Levinson (2026), "Network Origin-Demand Estimation Using Percolation (NODE)",
 Findings, DOI: 10.32866/001c.147387.
 
-This file preserves the Python code listing found in the supplementary
-information. It is a minimal allocation routine, not a complete reproduction
-script for the paper figures or stochastic example.
+This file preserves the core Python code listing found in the supplementary
+information. See `examples/toy_network_demo.py` for a runnable deterministic
+toy-network example using this function.
 """
 
 

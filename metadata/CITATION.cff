@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use these materials, please cite the associated paper."
 title: "Replication materials for Network Origin-Demand Estimation Using Percolation (NODE)"
+license: "CC-BY-SA-4.0"
 authors:
   - family-names: "Levinson"
 date-released: "2026"
