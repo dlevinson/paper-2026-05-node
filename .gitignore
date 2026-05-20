@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
+
 # local-package-git-hygiene:start
 .DS_Store
 ._*
