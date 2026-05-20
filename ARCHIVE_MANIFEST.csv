@@ -1,0 +1,5 @@
+row_id,source,local_copy,decision,reason,size_bytes
+paper-2026-05,/Users/dlev2617/Documents/Code/Agents/data-code-audit-20260509/stage3/draft_packages/paper-2026-05-node,/Users/dlev2617/Documents/Code/Agents/github-packages/paper-2026-05-node,already_present,Existing hand-reviewed package folder left in place; no nested duplicate copy made.,110562
+paper-2026-05,/Users/dlev2617/Documents/Papers/~05-Published/Findings/Findings___NODE_Model/Findings__Node_R1/Findings___NODE_Model.pdf,,not_copied,"Evidence/supporting context only, not a package candidate.",426001
+paper-2026-05,/Users/dlev2617/Documents/Papers/~05-Published/Findings/Findings___NODE_Model/Findings__Node_R1/Findings___NODE_Model SI.pdf,,not_copied,"Evidence/supporting context only, not a package candidate.",374784
+paper-2026-05,/Users/dlev2617/Documents/Papers/~05-Published/Findings/Findings___NODE_Model/Findings__Node_R1/si.tex,,not_copied,Manuscript/publisher/source-text evidence; not a release artifact.,14520

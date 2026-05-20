@@ -1,0 +1,249 @@
+\clearpage
+\appendix
+\section{Supplemental Information for ``NODE''}
+
+\subsection{Notation}
+
+\begin{table}[h]
+\centering
+\caption{Notation.}
+\begin{tabular}{llc}
+\toprule
+Symbol & Meaning & Units \\
+\midrule
+$c_{od}$ & generalised cost from $o$ to $d$ & time, money, or index \\
+$F(c)$ & acceptance cumulative distribution function by cost $c$ & probability \\
+$f(c)$ & acceptance probability distribution function by cost $c$ & probability density \\
+$G = \{V,E\}$ & network graph & -- \\
+$J_d$ & jobs at destination $d$ & persons \\
+$j_{d,k}$ & residual jobs at $d$ in step $k$ & persons \\
+$k$ & step index & -- \\
+$O, D$ & sets of origins and destinations & -- \\
+$o, d$ & indices of origins and destinations & -- \\
+$P$ & stationary movement kernel (when time-invariant) & probability \\
+$P_k$ & row‑stochastic movement kernel at step $k$ & probability \\
+$t$ & scenario/time index (superscript $(t)$ denotes scenario) & -- \\
+$\Delta t$ & time quantum between adjacent cells & time \\
+$W_o$ & workers at origin $o$ & persons \\
+$w_{o,k}$ & residual workers at $o$ in step $k$ & persons \\
+$X_{od,k}$ & cumulative flow from $o$ to $d$ in step $k$ & persons \\
+$x_{od,k}$ & accepted (incremental) flow from $o$ to $d$ in step $k$ & persons \\
+$\Delta X^{(t)}$ & change in flows between scenarios $t-1$ and $t$ & persons \\
+$\lambda$ & acceptance hazard & per unit cost \\
+$\sigma$ & per‑step acceptance $(1-e^{-\lambda \Delta t})$ & probability \\
+$\sigma_{d,k}$ & per-step acceptance at destination $d$ in step $k$ & probability \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Counterexample: cost-ordered allocation is not a general optimiser}\label{si:counterexample}
+
+Two origins, two destinations, unit supplies: $W_{O1}=W_{O2}=1$, $J_{D1}=J_{D2}=1$. Costs:
+\begin{center}
+\begin{tabular}{c|cc}
+ & $D1$ & $D2$\\\hline
+$O1$ & $1.00$ & $1.01$\\
+$O2$ & $1.01$ & $100$
+\end{tabular}
+\end{center}
+Cost ordered allocation (the greedy algorithm) assigns $O1\!\to\!D1$ (cost $1.00$), then must send $O2\!\to\!D2$ (cost $100$), total $101.00$. The min-cost-flow solution is $O1\!\to\!D2$ and $O2\!\to\!D1$ with total $1.01+1.01=2.02$. Hence cost-ordered differs from the global optimum.\hfill$\square$
+
+\subsection{When does cost-ordered match the transport optimum?}\label{si:tp-conditions}
+
+\begin{proposition}[Cost-ordered optimality under Monge]\label{prop:monge}
+Consider the Hitchcock--Koopmans problem with supplies $W_o$, demands $J_d$, and
+costs $c_{od}$. If the cost array is Monge, i.e.,
+
+\begin{equation}
+    c_{i+1,j+1}+c_{i,j} \le c_{i+1,j}+c_{i,j+1}\quad \forall i,j,
+\end{equation}
+then the cost-ordered allocation that processes $(o,d)$ in non-decreasing $c_{od}$
+(with a fixed, reproducible tie-break) attains an optimal solution. 
+\end{proposition}
+
+\begin{proof}[Sketch]
+Under the Monge property, the transport polytope is totally monotone and admits
+northwest-corner/cost-ordered constructions that are optimal; see \citet{BurkardKlinzRudolf1996}.
+The NODE sweep respects this order and, because updates preserve feasibility and
+complementary slackness under Monge structure, the resulting plan minimises total cost.
+A counterexample in Appendix~A.2 shows the property is sufficient for cost-ordered optimality.
+\end{proof}
+
+With shortest-path costs $c_{od}$, the global benchmark is the Hitchcock–Koopmans transport problem (a min-cost flow on the OD bipartite graph):
+\begin{equation}
+    \label{eq:tp}
+    \min_{X\ge 0}\ \sum_{o\in O}\sum_{d\in D} c_{od}X_{od}
+    \quad\text{s.t.}\quad
+    \sum_{d}X_{od}=W_o,\ \ \sum_{o}X_{od}=J_d.
+\end{equation}
+NODE processes $(o,d)$ in nondecreasing $c_{od}$ and assigns until capacities bind. This coincides with the optimum of \eqref{eq:tp} only under special cost structure (e.g., Monge/convex arrays, or shared distance orderings yielding total monotonicity); otherwise NODE is a transparent least-cost \emph{heuristic} that exposes local capacity competition (see Appendix~\ref{si:counterexample}).
+
+
+\subsection{Proofs and unit–vs–batch equivalence}\label{si:proofs}
+
+\textbf{Lemma S2.1 (Termination).} The algorithm terminates in a finite number of steps.\\
+\emph{Proof.} Each processed event either reduces $\sum_o w_o$ or is skipped because $w_o=0$ or $j_d=0$. There are at most $|O||D|$ events and at most $\sum_o W_o$ positive assignments. With nonnegative link costs and a fixed tie-break, the event order is finite, hence termination.\hfill$\square$
+
+\noindent\textbf{Lemma S2.2 (Mass preservation).} If $\sum_o W_o=\sum_d J_d$ and all pairs are mutually reachable, then $\sum_{od} X_{od}=\sum_o W_o=\sum_d J_d$.\\
+\emph{Proof.} Each positive assignment subtracts the same $\delta$ from $w_o$ and $j_d$, and adds it to $X_{od}$. When the algorithm halts with all $w_o=0$, column residuals must also be zero by conservation, so $\sum_{od}X_{od}$ equals the common total.\hfill$\square$
+
+\paragraph{Lemma S2.3 (Integrality).}
+If $W_o$ and $J_d$ are integers for all $o,d$, the deterministic event‑order algorithm
+yields an integral allocation matrix $X$.
+\emph{Proof.} Each assignment updates $X_{od}\leftarrow X_{od}+\delta$ with
+$\delta=\min\{w_o,j_d\}$, which is integer when $w_o,j_d$ are integers.
+All updates preserve integrality, so $X$ is integral at termination. \hfill$\square$
+
+
+
+\subsection{Pseudocode (priority-queue implementation (frontier-based version)
+)}\label{si:pseudocode}
+\noindent\textbf{Inputs.} Network $G=(V,E)$ with nonnegative link costs; origin set $O$ with workers $W_o$; destination set $D$ with jobs $J_d$; shortest-path cost function $c_{od}$; fixed tie-break on $(c,o,d)$.\\
+\textbf{Outputs.} Allocation matrix $X\in\mathbb{R}_{+}^{|O|\times|D|}$; residual vectors $w, j$.
+
+\begin{enumerate}
+    \item Initialise $w\leftarrow W$, $j\leftarrow J$, $X\leftarrow 0$.
+    \item For each $o\in O$, start a Dijkstra-like expansion with source $o$. Maintain a min-heap keyed by tentative cost. When a destination $d$ is first settled for $o$, append the event $(c_{od},o,d)$ to a global event stream.
+    \item Process events from the stream in non-decreasing order of $(c,o,d)$. For each event:
+    \begin{enumerate}
+        \item If $w_o=0$ or $j_d=0$, \emph{skip}.
+        \item Let $\delta=\min\{w_o,j_d\}$. Set $X_{od}\leftarrow X_{od}+\delta$, $w_o\leftarrow w_o-\delta$, $j_d\leftarrow j_d-\delta$.
+    \end{enumerate}
+    \item Stop when all $w_o=0$ or no admissible pairs remain. Report residuals if $\sum_o W_o\neq \sum_d J_d$.
+\end{enumerate}
+
+
+\subsection{Complexity and implementation notes}\label{si:complexity}
+\begin{itemize}
+\item \textbf{Frontier (recommended).} Run Dijkstra's algorithm from each origin (multi-source); record each destination once per origin. Complexity dominated by shortest paths, $O\!\left((|E|+|V|\log|V|)|O|\right)$ on sparse graphs.
+\item \textbf{All-pairs + sort (didactic).} Generate all $(o,d)$ pairs, sort by $c_{od}$, then sweep. Work $O(|O||D|\log(|O||D|))$ may dominate.
+\item \textbf{Reproducibility.} Fix lexicographic tie-break on $(c,o,d)$; fix random-number seed for stochastic runs.
+\item \textbf{Disconnected pairs and imbalance.} Ignore unreachable origin-destination pairs. If $\sum_o W_o\neq\sum_d J_d$, stop and report residuals.
+\end{itemize}
+
+
+\subsection{Stochastic acceptance and the gravity link}\label{si:stoch-gravity}
+
+Let the cumulative acceptance be $p(c)=1-\exp\{-\int_0^c\lambda(s)ds\}$ with hazard $\lambda(c)\ge0$. The acceptance \emph{density} is $f(c)=\lambda(c)\exp\{-\int_0^c\lambda(s)ds\}$. With constant $\lambda$, $p(c)=1-e^{-\lambda c}$ and $f(c)=\lambda e^{-\lambda c}$.
+
+\paragraph{Expected flows without capacity limits.} Consider one origin $o$ with $W_o$ workers and destinations $d\in D$ with job counts $J_d$. Treat each job as a competitor in an ``exponential race'': destination-$d$ jobs draw i.i.d.\ $E\sim\mathrm{Exp}(\lambda)$ and reveal arrival times $T_{d,k}=c_{od}+E_{d,k}$. The worker goes to the job with the minimum $T_{d,k}$. For any fixed $o$, the probability that the winner lies at destination $d$ is
+\begin{equation}
+\Pr\{\text{winner at }d\}=\frac{J_de^{-\lambda c_{od}}}{\sum_{d'} J_{d'}e^{-\lambda c_{od'}}}.\label{eq:softmax}
+\end{equation}
+\emph{Sketch.} For shifted exponentials $c_i+E_i$, $\Pr\{\arg\min i\}\propto e^{-\lambda c_i}$; aggregating $J_d$ i.i.d.\ jobs at $d$ multiplies the weight by $J_d$. Thus the expected allocation from $o$ is $W_o$ times \eqref{eq:softmax}, i.e., the singly-constrained exponential-gravity form. With nonconstant $\lambda(c)$, replace $e^{-\lambda c}$ by $\exp\{-\int_0^{c}\lambda(s)ds\}$.
+
+\paragraph{With capacity limits.} When $J_d$ bind, the process becomes a sequence of races with shrinking sets; the expectation still prefers low $c_{od}$, but the closed form \eqref{eq:softmax} no longer holds. NODE keeps the frontier and capacities explicit, which is the point of using it.
+
+
+Define survival $S(c)=e^{-\lambda c}$ and hazard $h(c)=\lambda$ for $c>0$, so $p(c)=1-S(c)$.
+Embedding this acceptance in the deterministic event order yields a stochastic variant of NODE; the main text analyses the deterministic limit.
+
+
+
+
+
+\subsection{Worked stochastic realisation for the toy network}\label{si:stochastic-example}
+For $\lambda=0.35$ and a fixed RNG seed, one draw (illustrative) produced:
+\begin{center}
+\begin{tabular}{lccc|c}
+\toprule
+ & D1 & D2 & D3 & Total from origin\\
+\midrule
+O1 & 1 & 1 & 2 & 4\\
+O2 & 3 & 2 & 0 & 5\\
+\midrule
+Total to dest. & 4 & 3 & 2 & 9\\
+\bottomrule
+\end{tabular}
+\end{center}
+This preserves workers and jobs, but differs from the deterministic table in the main text. 
+%Event logs and seeds are provided in the repository for exact replication.
+
+\bigskip
+\noindent\textbf{Data and code.} Minimal code to reproduce the figure, the deterministic table, and a stochastic draw is included at the end of the SI. Tie-breaks and seeds are set in the script for full reproducibility.
+
+\subsection{Matrix form and symbols}\label{si:matrix}
+
+%\subsection*{S6. Matrix form and symbols}
+Let $w^{(t)}\in\mathbb{R}_+^{|O|}$, $j^{(t)}\in\mathbb{R}_+^{|D|}$ be residuals after step $t$, and $M$ be a binary indicator matrix (mask) of admissible pairs. At event $(o,d)$, the update is
+\begin{equation}
+X_{od}^{(t+1)}=X_{od}^{(t)}+\delta^{(t)},\quad \delta^{(t)}=\min\{w_o^{(t)},j_d^{(t)}\},
+\end{equation}
+with component-wise reductions to $w^{(t+1)}$, $j^{(t+1)}$. Shapes are explicit and the $\min$ is component-wise; masked pairs have $\delta^{(t)}=0$.
+
+
+
+
+%\subsection*{S8. Matrix Form}\label{app:matrix}
+Let $\mathbb{1}_{\mathcal{F}^{(t)}}$ be a binary mask of OD pairs discovered at step $t$.
+\begin{equation}
+M^{(t)} = \min\!\big[ \mathbb{1}_{\mathcal{F}^{(t)}} \odot \mathrm{diag}(\mathbf{w}^{(t)})\mathbf{1}^\top, \mathbf{1}(\mathbf{j}^{(t)})^\top \big]
+\end{equation}
+\begin{equation}
+\mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} - M^{(t)}\mathbf{1}, \qquad
+\mathbf{j}^{(t+1)} = \mathbf{j}^{(t)} - M^{(t)\top}\mathbf{1}
+\end{equation}
+\begin{equation}
+T = \sum_t M^{(t)}.
+\end{equation}
+
+Note: $\odot$ denotes element-wise multiplication; $\mathrm{diag}$  forms a diagonal matrix.
+
+\subsection{CTM realisation of NODE}
+
+NODE can be implemented in discrete time on a time-expanded network. To do this, partition space so that adjacent cells are separated by a fixed travel-time quantum $\Delta t$, or alternatively use a time-expanded graph whose edges represent $\Delta t$ of travel. At each step $k$, worker mass in a cell moves to $\Delta t$-adjacent cells according to a row-stochastic movement kernel $P_k$ (reflecting network topology and impedance), encounters the cell’s remaining jobs $j_{d,k}$, and accepts with per-step probability $\sigma_{d,k}$, drawing down $j_{d,k}$. Here $o$ and $d$ index cells in the time‑expanded network, with $O$ and $D$ meaning `worker‑holding cells' and `job‑holding cells'; similarly the variable $k$ is remapped to index time steps, rather than assignment events. This can be thought of as an agent-based intervening opportunities model.
+
+
+With a constant hazard $\lambda$ the discrete acceptance is $\sigma = 1 - e^{-\lambda \Delta t}$. If capacities do not bind and $P_k$ is stationary in $k$ (i.e., $P_k = P$), the expected first-acceptance time is geometric, yielding an exponential deterrence in travel time and reproducing the origin-constrained gravity form. Binding capacities, heterogeneous hazards, or state-dependent $P_k$ recover NODE’s competitive allocation and its deviations from gravity. Capacity is enforced at the destination level before allocating to origins. This is shown in Algorithm \ref{alg:ctm-node}. We use the shorthand $\sum_O$ to denote $\sum_{o\in O}$, and similarly $\sum_D$ for $\sum_{d\in D}$. 
+
+
+
+\begin{algorithm}
+\caption{CTM--NODE (move then accept; summation shorthand)}
+\label{alg:ctm-node}
+\begin{algorithmic}[1]
+  \State \textbf{Inputs:} $\Delta t$, $w_{o,0}=W_o$, $j_{d,0}=J_d$, $X_{od,0}=0$, $P_k$, $\sigma_{d,k}$
+  \For{$k=1,2,\ldots$}
+    \ForAll{$d\in D$} \Comment{accept only from mass that arrives at $d$ this step}
+      \If{$\sigma_{d,k}\sum_O w_{o,k-1}(P_k)_{od} \le j_{d,k-1}$}
+        \ForAll{$o\in O$}
+          \State $x_{od,k} \gets \sigma_{d,k} w_{o,k-1}(P_k)_{o d}$
+        \EndFor
+      \Else \Comment{Capacity binds}
+        \ForAll{$o\in O$}
+          \State $x_{od,k} \gets j_{d,k-1}\dfrac{w_{o,k-1}(P_k)_{od}}{\sum_O w_{k-1}(P_k)_{d}}$
+        \EndFor
+      \EndIf
+      \State $j_{d,k} \gets j_{d,k-1} - \sum_O x_{od,k}$
+      \ForAll{$o\in O$}
+        \State $X_{od,k} \gets X_{od,k-1} + x_{od,k}$
+      \EndFor
+    \EndFor
+    \ForAll{$o\in O$} \Comment{Workers update, subtract acceptances into cell $o$}
+        \State $w_{o,k} = \sum_{i} w_{i,k-1}(P_k)_{io} - \sum_{d} x_{od,k}$
+    
+%      \State $w_{o,k} \gets \sum_O w_{k-1}(P_k)_{o} - (j_{o,k-1}-j_{o,k})$
+    \EndFor
+    \State \textbf{Stop} if $\sum_O w_{o,k}=0$ or $\sum_D j_{d,k}=0$
+  \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\clearpage
+\subsection{Code: A short, reproducible implementation for the Toy Network}
+
+\begin{lstlisting}[language=Python,caption={Minimal NODE implementation for the toy network.}]
+def node(W, J, C):
+    # W: dict o->int, J: dict d->int, C: dict (o,d)->cost or inf
+    from math import inf
+    X = {(o, d): 0 for (o, d) in C if C[(o, d)] < inf}
+    w = W.copy(); j = J.copy()
+    events = sorted([(C[(o, d)], o, d) for (o, d) in X.keys()])
+    for _, o, d in events:
+        m = min(w[o], j[d])
+        if m > 0:
+            X[(o, d)] += m
+            w[o] -= m
+            j[d] -= m
+    return X, w, j
+\end{lstlisting}
