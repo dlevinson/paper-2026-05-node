@@ -1,6 +1,10 @@
 # Replication Materials For Network Origin-Demand Estimation Using Percolation (NODE)
 
-This package is registered as uploaded to an existing private GitHub repository: https://github.com/dlevinson/paper-2026-05-node. Upload scope is governed by `PACKAGE_MANIFEST.csv`, with paper PDFs retained as local reference-only assets.
+## Contribution
+
+This paper introduces NODE, a deterministic, cost-ordered method for constructing origin–destination matrices while respecting destination opportunity constraints. Using shortest-path network costs and a reproducible allocation order, it provides a computationally transparent alternative to fitted gravity and utility models and clarifies when its expected flows resemble conventional trip-distribution forms.
+
+This package is registered as uploaded to the public GitHub repository: https://github.com/dlevinson/paper-2026-05-node. Upload scope is governed by `PACKAGE_MANIFEST.csv`, with paper PDFs retained as local reference-only assets.
 
 ## Citation
 
