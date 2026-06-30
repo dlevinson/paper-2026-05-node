@@ -4,7 +4,7 @@
 
 This paper introduces NODE, a deterministic, cost-ordered method for constructing origin–destination matrices while respecting destination opportunity constraints. Using shortest-path network costs and a reproducible allocation order, it provides a computationally transparent alternative to fitted gravity and utility models and clarifies when its expected flows resemble conventional trip-distribution forms.
 
-This package was staged from the Stage 3 ready-to-package queue and is now public. Its license is aligned with the published paper.
+This package is registered as uploaded to the public GitHub repository: https://github.com/dlevinson/paper-2026-05-node. Upload scope is governed by `PACKAGE_MANIFEST.csv`, with paper PDFs retained as local reference-only assets.
 
 ## Citation
 
@@ -16,13 +16,15 @@ This draft package contains the minimal Python NODE implementation extracted fro
 
 ## License
 
-The published Findings page identifies the paper license as CC BY-SA 4.0. This package therefore uses the same Creative Commons Attribution-ShareAlike 4.0 International license. See `LICENSE`.
+The published Findings page identifies the paper license as CC BY-SA 4.0. The operative root license is `LICENSE.md`, which applies the same Creative Commons Attribution-ShareAlike 4.0 International license to the repository's author-created code, scripts, documentation, and derived materials. The full text is also in `data/LICENSE`.
+
+The published paper PDF in `paper/` and any third-party source materials retain their original terms and are not relicensed here.
 
 ## Contents
 
 - `code/node_minimal_from_si.py`: minimal NODE allocation function extracted from the SI code listing.
-- `examples/toy_network_demo.py`: runnable deterministic toy-network example using the SI function.
-- `source/si.tex`: source TeX copied from the local SI folder for provenance review.
+- `code/legacy/examples/toy_network_demo.py`: runnable deterministic toy-network example using the SI function.
+- `code/legacy/source/si.tex`: source TeX copied from the local SI folder for provenance review.
 - `metadata/CITATION.cff`: draft citation metadata.
 - `metadata/PACKAGE_STATUS.md`: audit notes and remaining decisions.
 
@@ -35,7 +37,7 @@ The SI TeX source contains the core `node()` allocation function. This package a
 Run:
 
 ```bash
-python examples/toy_network_demo.py
+python code/legacy/examples/toy_network_demo.py
 ```
 
 Or import the function from `code/node_minimal_from_si.py` and provide origin supplies, destination capacities, and an OD cost dictionary. The function returns the allocation matrix and residual origin/destination capacities.
@@ -43,3 +45,25 @@ Or import the function from `code/node_minimal_from_si.py` and provide origin su
 ## Exclusions
 
 Publisher PDFs and article proofs are not included. No third-party data or human-subject data are included.
+
+
+
+<!-- published-paper-reference:start -->
+## Published Paper Reference
+
+- Local published/final PDF reference: `paper/00_published_reference_node_percolation.pdf`
+- Official published source: https://findingspress.org/article/147387
+- Official PDF/source link: https://findingspress.org/article/147387.pdf
+- Paper-reference note: Findings published PDF.
+<!-- published-paper-reference:end -->
+
+<!-- package-hardening-status:start -->
+## Package Hardening Status
+
+Generated: 2026-05-20 12:05:29 AEST
+
+- Pipeline: `UPLOADED`
+- Sidecars added/updated: `PACKAGE_STATUS.md`, `PACKAGE_MANIFEST.csv`, `LICENSE_STATUS.md`.
+- Paper reference copies are for local audit convenience and are not public-upload assets without rights review.
+- Existing private GitHub repository: https://github.com/dlevinson/paper-2026-05-node.
+<!-- package-hardening-status:end -->
