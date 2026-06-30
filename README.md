@@ -16,7 +16,9 @@ This draft package contains the minimal Python NODE implementation extracted fro
 
 ## License
 
-The published Findings page identifies the paper license as CC BY-SA 4.0. This package therefore uses the same Creative Commons Attribution-ShareAlike 4.0 International license. See `data/LICENSE`.
+The published Findings page identifies the paper license as CC BY-SA 4.0. The operative root license is `LICENSE.md`, which applies the same Creative Commons Attribution-ShareAlike 4.0 International license to the repository's author-created code, scripts, documentation, and derived materials. The full text is also in `data/LICENSE`.
+
+The published paper PDF in `paper/` and any third-party source materials retain their original terms and are not relicensed here.
 
 ## Contents
 
